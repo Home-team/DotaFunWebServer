@@ -55,6 +55,37 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    public User find(String login) {
+        Connection connection = PooledDataSource.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        User user = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM `user` WHERE user.login = ?");
+            preparedStatement.setString(1, login);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                user = getUserByResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                connection.close();
+            } catch (SQLException e) {
+                LOG.error(e.getMessage());
+            }
+        }
+        return user;
+    }
+
     @Override
     public void create(User user) {
         Connection connection = PooledDataSource.getConnection();
