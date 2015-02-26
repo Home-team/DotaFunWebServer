@@ -28,6 +28,7 @@ public class RightDaoImpl implements RightDao {
         return right;
     }
 
+    @Override
     public void create(Right right) throws SQLException {
         PreparedStatement preparedStatement = null;
         try {
@@ -40,6 +41,7 @@ public class RightDaoImpl implements RightDao {
         }
     }
 
+    @Override
     public void delete(Right right) throws SQLException {
         PreparedStatement preparedStatement = null;
 
@@ -53,6 +55,7 @@ public class RightDaoImpl implements RightDao {
         }
     }
 
+    @Override
     public List<Right> findByUserId(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet;
@@ -74,6 +77,7 @@ public class RightDaoImpl implements RightDao {
         return rights;
     }
 
+    @Override
     public List<Right> findByPermissionId(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet;

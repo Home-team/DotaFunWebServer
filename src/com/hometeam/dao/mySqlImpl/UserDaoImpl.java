@@ -16,7 +16,7 @@ public class UserDaoImpl implements UserDao{
 
     private Connection connection;
 
-    private User getUserByResultSet(ResultSet resultSet) throws SQLException {
+    protected User getUserByResultSet(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setId(resultSet.getInt("id"));
         user.setLogin(resultSet.getString("login"));
@@ -107,6 +107,48 @@ public class UserDaoImpl implements UserDao{
             while (resultSet.next()) {
                 user = getUserByResultSet(resultSet);
                 users.add(user);
+            }
+        } finally {
+            preparedStatement.close();
+            resultSet.close();
+        }
+
+        return users;
+    }
+
+    @Override
+    public List<User> findBySender(User user) throws SQLException{
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<User> users = new ArrayList<>();
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT `user`.id, `user`.login, `user`.`password` FROM `user` INNER JOIN contact ON contact.receiver_id = `user`.id WHERE contact.sender_id = ?");
+            preparedStatement.setInt(1, user.getId());
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                users.add(getUserByResultSet(resultSet));
+            }
+        } finally {
+            preparedStatement.close();
+            resultSet.close();
+        }
+
+        return users;
+    }
+
+    @Override
+    public List<User> findByReceiver(User user) throws SQLException{
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<User> users = new ArrayList<>();
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT `user`.id, `user`.login, `user`.`password` FROM `user` INNER JOIN contact ON contact.sender_id = `user`.id WHERE contact.receiver_id = ?");
+            preparedStatement.setInt(1, user.getId());
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                users.add(getUserByResultSet(resultSet));
             }
         } finally {
             preparedStatement.close();

@@ -15,6 +15,10 @@ public interface UserDao {
 
     List<User> getAll(int offset, int limit) throws SQLException;
 
+    List<User> findBySender(User user) throws SQLException;
+
+    List<User> findByReceiver(User user) throws SQLException;
+
     void create(User user) throws SQLException;
 
     void update(User user) throws SQLException;

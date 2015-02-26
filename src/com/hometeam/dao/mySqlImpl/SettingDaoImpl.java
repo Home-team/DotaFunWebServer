@@ -75,6 +75,7 @@ public class SettingDaoImpl implements SettingDao {
         return settings;
     }
 
+    @Override
     public void create(Setting setting) throws SQLException {
         PreparedStatement preparedStatement = null;
         try {
@@ -88,6 +89,7 @@ public class SettingDaoImpl implements SettingDao {
         }
     }
 
+    @Override
     public void update(Setting setting) throws SQLException {
         PreparedStatement preparedStatement = null;
         try {
@@ -100,6 +102,7 @@ public class SettingDaoImpl implements SettingDao {
         }
     }
 
+    @Override
     public void delete(Setting setting) throws SQLException {
         PreparedStatement preparedStatement = null;
         try {

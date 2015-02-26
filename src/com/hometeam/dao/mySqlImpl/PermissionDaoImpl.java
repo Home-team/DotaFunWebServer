@@ -26,6 +26,7 @@ public class PermissionDaoImpl implements PermissionDao{
         this.connection = connection;
     }
 
+    @Override
     public Permission findById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -45,6 +46,7 @@ public class PermissionDaoImpl implements PermissionDao{
         return permission;
     }
 
+    @Override
     public Permission findByName(String name) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
