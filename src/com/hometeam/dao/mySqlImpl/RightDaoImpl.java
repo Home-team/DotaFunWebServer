@@ -13,4 +13,6 @@ public class RightDaoImpl implements RightDao{
     public RightDaoImpl(Connection connection) {
         this.connection = connection;
     }
+
+
 }
