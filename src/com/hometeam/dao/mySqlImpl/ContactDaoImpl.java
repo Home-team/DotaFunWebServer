@@ -2,6 +2,7 @@ package com.hometeam.dao.mySqlImpl;
 
 import com.hometeam.dao.ContactDao;
 import com.hometeam.entity.Contact;
+import com.hometeam.util.PooledDataSource;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -16,15 +17,19 @@ public class ContactDaoImpl implements ContactDao {
 
     private Connection connection;
 
+    public ContactDaoImpl(Connection connection) {
+        this.connection = connection;
+    }
+
+    public ContactDaoImpl() {
+        connection = PooledDataSource.getConnection();
+    }
+
     protected Contact getByResultSet(ResultSet resultSet) throws SQLException {
         Contact contact = new Contact();
         contact.setReceiverId(resultSet.getInt("receiver_id"));
         contact.setSenderId(resultSet.getInt("sender_id"));
         return contact;
-    }
-
-    public ContactDaoImpl(Connection connection) {
-        this.connection = connection;
     }
 
     @Override
@@ -45,6 +50,7 @@ public class ContactDaoImpl implements ContactDao {
         } finally {
             resultSet.close();
             preparedStatement.close();
+            connection.close();
         }
 
         return contacts;
@@ -68,6 +74,7 @@ public class ContactDaoImpl implements ContactDao {
         } finally {
             resultSet.close();
             preparedStatement.close();
+            connection.close();
         }
 
         return contacts;
@@ -83,6 +90,7 @@ public class ContactDaoImpl implements ContactDao {
             preparedStatement.executeUpdate();
         } finally {
             preparedStatement.close();
+            connection.close();
         }
     }
 
@@ -96,6 +104,7 @@ public class ContactDaoImpl implements ContactDao {
             preparedStatement.executeUpdate();
         } finally {
             preparedStatement.close();
+            connection.close();
         }
     }
 }

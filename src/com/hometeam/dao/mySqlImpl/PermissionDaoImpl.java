@@ -2,6 +2,7 @@ package com.hometeam.dao.mySqlImpl;
 
 import com.hometeam.dao.PermissionDao;
 import com.hometeam.entity.Permission;
+import com.hometeam.util.PooledDataSource;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -14,16 +15,20 @@ public class PermissionDaoImpl implements PermissionDao{
 
     private Connection connection;
 
+    public PermissionDaoImpl() {
+        connection = PooledDataSource.getConnection();
+    }
+
+    public PermissionDaoImpl(Connection connection) {
+        this.connection = connection;
+    }
+
     private Permission getByResultSet(ResultSet resultSet) throws SQLException {
         Permission permission = new Permission();
         permission.setId(resultSet.getInt("id"));
         permission.setName(resultSet.getString("name"));
         permission.setDescription(resultSet.getString("description"));
         return permission;
-    }
-
-    public PermissionDaoImpl(Connection connection) {
-        this.connection = connection;
     }
 
     @Override
@@ -39,8 +44,9 @@ public class PermissionDaoImpl implements PermissionDao{
                 permission = getByResultSet(resultSet);
             }
         } finally {
-            preparedStatement.close();
             resultSet.close();
+            preparedStatement.close();
+            connection.close();
         }
 
         return permission;
@@ -59,8 +65,9 @@ public class PermissionDaoImpl implements PermissionDao{
                 permission = getByResultSet(resultSet);
             }
         } finally {
-            preparedStatement.close();
             resultSet.close();
+            preparedStatement.close();
+            connection.close();
         }
 
         return permission;

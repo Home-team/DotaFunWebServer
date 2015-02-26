@@ -2,6 +2,7 @@ package com.hometeam.dao.mySqlImpl;
 
 import com.hometeam.dao.UserDao;
 import com.hometeam.entity.User;
+import com.hometeam.util.PooledDataSource;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -15,6 +16,10 @@ public class UserDaoImpl implements UserDao{
     private static final Logger LOG = Logger.getLogger(UserDaoImpl.class);
 
     private Connection connection;
+
+    public UserDaoImpl() {
+        connection = PooledDataSource.getConnection();
+    }
 
     protected User getUserByResultSet(ResultSet resultSet) throws SQLException {
         User user = new User();
@@ -42,8 +47,9 @@ public class UserDaoImpl implements UserDao{
                 user = getUserByResultSet(resultSet);
             }
         } finally {
-            preparedStatement.close();
             resultSet.close();
+            preparedStatement.close();
+            connection.close();
         }
 
         return user;
@@ -63,8 +69,9 @@ public class UserDaoImpl implements UserDao{
                 user = getUserByResultSet(resultSet);
             }
         } finally {
-            preparedStatement.close();
             resultSet.close();
+            preparedStatement.close();
+            connection.close();
         }
 
         return user;
@@ -85,8 +92,9 @@ public class UserDaoImpl implements UserDao{
                 users.add(user);
             }
         } finally {
-            preparedStatement.close();
             resultSet.close();
+            preparedStatement.close();
+            connection.close();
         }
 
         return users;
@@ -109,8 +117,9 @@ public class UserDaoImpl implements UserDao{
                 users.add(user);
             }
         } finally {
-            preparedStatement.close();
             resultSet.close();
+            preparedStatement.close();
+            connection.close();
         }
 
         return users;
@@ -130,8 +139,9 @@ public class UserDaoImpl implements UserDao{
                 users.add(getUserByResultSet(resultSet));
             }
         } finally {
-            preparedStatement.close();
             resultSet.close();
+            preparedStatement.close();
+            connection.close();
         }
 
         return users;
@@ -151,8 +161,9 @@ public class UserDaoImpl implements UserDao{
                 users.add(getUserByResultSet(resultSet));
             }
         } finally {
-            preparedStatement.close();
             resultSet.close();
+            preparedStatement.close();
+            connection.close();
         }
 
         return users;
@@ -169,6 +180,7 @@ public class UserDaoImpl implements UserDao{
             preparedStatement.executeUpdate();
         } finally {
             preparedStatement.close();
+            connection.close();
         }
     }
 
@@ -184,6 +196,7 @@ public class UserDaoImpl implements UserDao{
             preparedStatement.executeUpdate();
         } finally {
             preparedStatement.close();
+            connection.close();
         }
     }
 
@@ -197,6 +210,7 @@ public class UserDaoImpl implements UserDao{
             preparedStatement.executeUpdate();
         } finally {
             preparedStatement.close();
+            connection.close();
         }
     }
 }

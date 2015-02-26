@@ -2,6 +2,7 @@ package com.hometeam.dao.mySqlImpl;
 
 import com.hometeam.dao.RightDao;
 import com.hometeam.entity.Right;
+import com.hometeam.util.PooledDataSource;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -15,6 +16,10 @@ public class RightDaoImpl implements RightDao {
     private static final Logger LOG = Logger.getLogger(RightDaoImpl.class);
 
     private Connection connection;
+
+    public RightDaoImpl() {
+        connection = PooledDataSource.getConnection();
+    }
 
     public RightDaoImpl(Connection connection) {
         this.connection = connection;
@@ -38,6 +43,7 @@ public class RightDaoImpl implements RightDao {
             preparedStatement.executeUpdate();
         } finally {
             preparedStatement.close();
+            connection.close();
         }
     }
 
@@ -52,6 +58,7 @@ public class RightDaoImpl implements RightDao {
             preparedStatement.executeUpdate();
         } finally {
             preparedStatement.close();
+            connection.close();
         }
     }
 
@@ -72,6 +79,7 @@ public class RightDaoImpl implements RightDao {
             }
         } finally {
             preparedStatement.close();
+            connection.close();
         }
 
         return rights;
@@ -94,6 +102,7 @@ public class RightDaoImpl implements RightDao {
             }
         } finally {
             preparedStatement.close();
+            connection.close();
         }
 
         return rights;

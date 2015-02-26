@@ -2,6 +2,7 @@ package com.hometeam.dao.mySqlImpl;
 
 import com.hometeam.dao.SettingDao;
 import com.hometeam.entity.Setting;
+import com.hometeam.util.PooledDataSource;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -15,6 +16,10 @@ public class SettingDaoImpl implements SettingDao {
     private static final Logger LOG = Logger.getLogger(SettingDaoImpl.class);
 
     private Connection connection;
+
+    public SettingDaoImpl() {
+        connection = PooledDataSource.getConnection();
+    }
 
     public SettingDaoImpl(Connection connection) {
         this.connection = connection;
@@ -45,8 +50,9 @@ public class SettingDaoImpl implements SettingDao {
                 settings.add(setting);
             }
         } finally {
-            preparedStatement.close();
             resultSet.close();
+            preparedStatement.close();
+            connection.close();
         }
 
         return settings;
@@ -68,8 +74,9 @@ public class SettingDaoImpl implements SettingDao {
                 settings.add(setting);
             }
         } finally {
-            preparedStatement.close();
             resultSet.close();
+            preparedStatement.close();
+            connection.close();
         }
 
         return settings;
@@ -86,6 +93,7 @@ public class SettingDaoImpl implements SettingDao {
             preparedStatement.executeUpdate();
         } finally {
             preparedStatement.close();
+            connection.close();
         }
     }
 
@@ -99,6 +107,7 @@ public class SettingDaoImpl implements SettingDao {
             preparedStatement.executeUpdate();
         } finally {
             preparedStatement.close();
+            connection.close();
         }
     }
 
@@ -112,6 +121,7 @@ public class SettingDaoImpl implements SettingDao {
             preparedStatement.executeUpdate();
         } finally {
             preparedStatement.close();
+            connection.close();
         }
     }
 }
