@@ -18,7 +18,7 @@ public class Messager {
     private static Messager instance = null;
     private HashMap<Integer, MessageBean> messagent;
 
-    public Messager getInstance() {
+    public static Messager getInstance() {
         if (instance == null) {
             instance = new Messager();
         }
