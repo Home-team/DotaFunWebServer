@@ -11,7 +11,7 @@ public interface UserDao {
 
     User findByLogin(String login) throws SQLException;
 
-    List<User> getAll() throws SQLException;
+    List<User> getAll();
 
     List<User> getAll(int offset, int limit) throws SQLException;
 

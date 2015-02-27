@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
     private static final Logger LOG = Logger.getLogger(UserDaoImpl.class);
 
     private Connection connection;
@@ -78,23 +78,27 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public List<User> getAll() throws SQLException {
+    public List<User> getAll() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         User user = null;
         List<User> users = new ArrayList<>();
 
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM `user`");
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                user = getUserByResultSet(resultSet);
-                users.add(user);
+            try {
+                preparedStatement = connection.prepareStatement("SELECT * FROM `user`");
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    user = getUserByResultSet(resultSet);
+                    users.add(user);
+                }
+            } finally {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
             }
-        } finally {
-            resultSet.close();
-            preparedStatement.close();
-            connection.close();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
         }
 
         return users;
@@ -126,7 +130,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public List<User> findBySender(User user) throws SQLException{
+    public List<User> findBySender(User user) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<User> users = new ArrayList<>();
@@ -148,7 +152,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public List<User> findByReceiver(User user) throws SQLException{
+    public List<User> findByReceiver(User user) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<User> users = new ArrayList<>();

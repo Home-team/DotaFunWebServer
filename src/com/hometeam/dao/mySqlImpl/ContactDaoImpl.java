@@ -33,7 +33,7 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override
-    public List<Contact> findBySenderId(int id) throws SQLException {
+    public List<Contact> findBySender(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Contact> contacts = new ArrayList<>();
@@ -57,25 +57,30 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override
-    public List<Contact> findByReceiver(int id) throws SQLException {
+    public List<Contact> findByReceiver(int id) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Contact> contacts = new ArrayList<>();
         Contact contact = null;
 
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM `contact` WHERE contact.receiver_id = ?");
-            preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                contact = getByResultSet(resultSet);
-                contacts.add(contact);
+            try {
+                preparedStatement = connection.prepareStatement("SELECT * FROM `contact` WHERE contact.receiver_id = ?");
+                preparedStatement.setInt(1, id);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    contact = getByResultSet(resultSet);
+                    contacts.add(contact);
+                }
+            } finally {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
             }
-        } finally {
-            resultSet.close();
-            preparedStatement.close();
-            connection.close();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
         }
+
 
         return contacts;
     }
