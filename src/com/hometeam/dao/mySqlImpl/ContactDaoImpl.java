@@ -22,7 +22,7 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     public ContactDaoImpl() {
-        connection = PooledDataSource.getConnection();
+
     }
 
     protected Contact getByResultSet(ResultSet resultSet) throws SQLException {
@@ -34,6 +34,7 @@ public class ContactDaoImpl implements ContactDao {
 
     @Override
     public List<Contact> findBySender(int id) {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Contact> contacts = new ArrayList<>();
@@ -66,6 +67,7 @@ public class ContactDaoImpl implements ContactDao {
 
     @Override
     public List<Contact> findByReceiver(int id) {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Contact> contacts = new ArrayList<>();
@@ -95,6 +97,7 @@ public class ContactDaoImpl implements ContactDao {
 
     @Override
     public void create(Contact contact) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO `contact` (`sender_id`, `receiver_id`) VALUES (?, ?)");
@@ -109,6 +112,7 @@ public class ContactDaoImpl implements ContactDao {
 
     @Override
     public void delete(Contact contact) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("DELETE FROM `contact` WHERE (`sender_id`=?) AND (`receiver_id`=?)");

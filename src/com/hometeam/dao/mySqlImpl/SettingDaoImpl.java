@@ -36,6 +36,7 @@ public class SettingDaoImpl implements SettingDao {
 
     @Override
     public List<Setting> findByUserId(int id) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Setting> settings = new ArrayList<>();
@@ -60,6 +61,7 @@ public class SettingDaoImpl implements SettingDao {
 
     @Override
     public List<Setting> findByName(String name) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<Setting> settings = new ArrayList<>();
@@ -84,6 +86,7 @@ public class SettingDaoImpl implements SettingDao {
 
     @Override
     public Setting find(int id, String name) {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Setting setting = null;
@@ -105,6 +108,7 @@ public class SettingDaoImpl implements SettingDao {
 
     @Override
     public void create(Setting setting) {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         try {
             try {
@@ -124,6 +128,7 @@ public class SettingDaoImpl implements SettingDao {
 
     @Override
     public void update(Setting setting) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("UPDATE `setting` SET `value`=? WHERE (`user_id`=?)");
@@ -138,6 +143,7 @@ public class SettingDaoImpl implements SettingDao {
 
     @Override
     public void delete(Setting setting) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("DELETE FROM `setting` WHERE (`user_id`=?) AND (`name`=?)");

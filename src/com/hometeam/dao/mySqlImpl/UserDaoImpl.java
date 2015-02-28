@@ -35,6 +35,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findById(int id) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         User user = null;
@@ -57,6 +58,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByLogin(String login) {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         User user = null;
@@ -87,6 +89,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAll() {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         User user = null;
@@ -114,6 +117,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAll(int offset, int limit) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         User user = null;
@@ -139,6 +143,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findBySender(User user) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<User> users = new ArrayList<>();
@@ -161,6 +166,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findByReceiver(User user) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<User> users = new ArrayList<>();
@@ -183,6 +189,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void create(User user) {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         try {
             try {
@@ -201,6 +208,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void update(User user) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
 
         try {
@@ -217,6 +225,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void delete(User user) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
 
         try {

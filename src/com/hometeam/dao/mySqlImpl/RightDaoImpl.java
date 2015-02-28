@@ -35,6 +35,7 @@ public class RightDaoImpl implements RightDao {
 
     @Override
     public void create(Right right) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO `right` (`user_id`, `permission_id`) VALUES (?, ?)");
@@ -49,6 +50,7 @@ public class RightDaoImpl implements RightDao {
 
     @Override
     public void delete(Right right) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
 
         try {
@@ -64,6 +66,7 @@ public class RightDaoImpl implements RightDao {
 
     @Override
     public List<Right> findByUserId(int id) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet;
         List<Right> rights = new ArrayList<>();
@@ -87,6 +90,7 @@ public class RightDaoImpl implements RightDao {
 
     @Override
     public List<Right> findByPermissionId(int id) throws SQLException {
+        connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet;
         List<Right> rights = new ArrayList<>();
