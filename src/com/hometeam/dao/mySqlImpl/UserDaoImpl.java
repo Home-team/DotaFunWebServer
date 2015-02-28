@@ -56,22 +56,30 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByLogin(String login) throws SQLException {
+    public User findByLogin(String login) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         User user = null;
 
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM `user` WHERE `user`.login = ?");
-            preparedStatement.setString(1, login);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                user = getUserByResultSet(resultSet);
+            try {
+                preparedStatement = connection.prepareStatement("SELECT * FROM `user` WHERE `user`.login = ?");
+                preparedStatement.setString(1, login);
+                resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    user = getUserByResultSet(resultSet);
+                }
+            } finally {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                connection.close();
             }
-        } finally {
-            resultSet.close();
-            preparedStatement.close();
-            connection.close();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
         }
 
         return user;
@@ -174,17 +182,20 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void create(User user) throws SQLException {
+    public void create(User user) {
         PreparedStatement preparedStatement = null;
-
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO `user` (`login`, `password`) VALUES (?, ?)");
-            preparedStatement.setString(1, user.getLogin());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.executeUpdate();
-        } finally {
-            preparedStatement.close();
-            connection.close();
+            try {
+                preparedStatement = connection.prepareStatement("INSERT INTO `user` (`login`, `password`) VALUES (?, ?)");
+                preparedStatement.setString(1, user.getLogin());
+                preparedStatement.setString(2, user.getPassword());
+                preparedStatement.executeUpdate();
+            } finally {
+                preparedStatement.close();
+                connection.close();
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
         }
     }
 

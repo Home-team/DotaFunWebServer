@@ -9,7 +9,7 @@ public interface UserDao {
 
     User findById(int id) throws SQLException;
 
-    User findByLogin(String login) throws SQLException;
+    User findByLogin(String login);
 
     List<User> getAll();
 
@@ -19,7 +19,7 @@ public interface UserDao {
 
     List<User> findByReceiver(User user) throws SQLException;
 
-    void create(User user) throws SQLException;
+    void create(User user);
 
     void update(User user) throws SQLException;
 

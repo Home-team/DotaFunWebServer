@@ -10,7 +10,9 @@ public interface SettingDao {
 
     List<Setting> findByName(String name) throws SQLException;
 
-    void create(Setting setting) throws SQLException;
+    Setting find(int id, String name);
+
+    void create(Setting setting);
 
     void update(Setting setting) throws SQLException;
 

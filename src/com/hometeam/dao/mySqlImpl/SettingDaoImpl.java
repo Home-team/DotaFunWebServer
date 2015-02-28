@@ -83,17 +83,42 @@ public class SettingDaoImpl implements SettingDao {
     }
 
     @Override
-    public void create(Setting setting) throws SQLException {
+    public Setting find(int id, String name) {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Setting setting = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM setting WHERE setting.user_id = ? AND setting.`name` = ?");
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, name);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()) {
+                setting = getSettingByResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            LOG.equals(e.getMessage());
+        }
+
+        return setting;
+    }
+
+    @Override
+    public void create(Setting setting) {
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO `setting` (`user_id`, `name`, `value`) VALUES (?, ?, ?)");
-            preparedStatement.setInt(1, setting.getUserId());
-            preparedStatement.setString(2, setting.getName());
-            preparedStatement.setString(3, setting.getValue());
-            preparedStatement.executeUpdate();
-        } finally {
-            preparedStatement.close();
-            connection.close();
+            try {
+                preparedStatement = connection.prepareStatement("INSERT INTO `setting` (`user_id`, `name`, `value`) VALUES (?, ?, ?)");
+                preparedStatement.setInt(1, setting.getUserId());
+                preparedStatement.setString(2, setting.getName());
+                preparedStatement.setString(3, setting.getValue());
+                preparedStatement.executeUpdate();
+            } finally {
+                preparedStatement.close();
+                connection.close();
+            }
+        } catch (SQLException e) {
+            LOG.equals(e.getMessage());
         }
     }
 

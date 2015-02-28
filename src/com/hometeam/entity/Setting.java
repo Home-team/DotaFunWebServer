@@ -5,6 +5,15 @@ public class Setting {
     private String name;
     private String value;
 
+    public Setting() {
+    }
+
+    public Setting(Integer userId, String name, String value) {
+        this.userId = userId;
+        this.name = name;
+        this.value = value;
+    }
+
     public Integer getUserId() {
         return userId;
     }

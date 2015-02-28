@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ContactDao {
-    List<Contact> findBySender(int id) throws SQLException;
+    List<Contact> findBySender(int id);
 
     List<Contact> findByReceiver(int id);
 
