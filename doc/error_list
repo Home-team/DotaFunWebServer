@@ -1,1 +1,5 @@
-BAD_LOGIN_OR_PASSWORD
+BAD_LOGIN_OR_PASSWORD - Неправильно введен логин или пароль
+BAD_MAX_LOGIN_LENGTH - Длинна логина преувеличена
+BAD_MIN_LOGIN_LENGTH - Длина логина маловата
+BAD_MAX_PASSWORD_LENGTH - по аналогии
+BAD_MIN_PASSWORD_LENGTH - по аналогии

@@ -7,6 +7,7 @@ import com.hometeam.dao.mySqlImpl.SettingDaoImpl;
 import com.hometeam.dao.mySqlImpl.UserDaoImpl;
 import com.hometeam.entity.Setting;
 import com.hometeam.entity.User;
+import com.hometeam.exception.UserAlreadyExist;
 import org.apache.log4j.Logger;
 
 public class UserService {
@@ -14,7 +15,12 @@ public class UserService {
     private UserDao userDao = new UserDaoImpl();
     private SettingDao settingDao = new SettingDaoImpl();
 
-    public void registration(String login, String password) {
+    public void registration(String login, String password) throws UserAlreadyExist {
+        User byLogin = userDao.findByLogin(login);
+        if(byLogin != null) {
+            throw new UserAlreadyExist();
+        }
+
         User newUser = new User();
         newUser.setLogin(login);
         newUser.setPassword(password);
