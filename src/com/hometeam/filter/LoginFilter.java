@@ -7,7 +7,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
-@WebFilter(filterName = "LoginFilter", urlPatterns = "/login")
+@WebFilter(filterName = "LoginFilter", urlPatterns = {"/login", "/registration"})
 public class LoginFilter implements Filter {
     public void destroy() {
     }

@@ -3,3 +3,6 @@ BAD_MAX_LOGIN_LENGTH - Длинна логина преувеличена
 BAD_MIN_LOGIN_LENGTH - Длина логина маловата
 BAD_MAX_PASSWORD_LENGTH - по аналогии
 BAD_MIN_PASSWORD_LENGTH - по аналогии
+USER_ALREADY_EXIST - пользователь уже существует
+NEED_LOGIN_PERMISSION - пользователь должен быть залогиненым чтоб совершить это действие
+CONTACT_ALREADY_EXIST - контакт уже был добавлен

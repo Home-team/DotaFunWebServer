@@ -2,14 +2,17 @@ package com.hometeam.service;
 
 import com.hometeam.bean.ContactBean;
 import com.hometeam.constant.R;
+import com.hometeam.core.Messager;
 import com.hometeam.dao.ContactDao;
 import com.hometeam.dao.SettingDao;
 import com.hometeam.dao.mySqlImpl.ContactDaoImpl;
 import com.hometeam.dao.mySqlImpl.SettingDaoImpl;
 import com.hometeam.entity.Contact;
+import com.hometeam.exception.ContactAlreadyExist;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +20,7 @@ public class ContactService {
     private static final Logger LOG = Logger.getLogger(ContactService.class);
     ContactDao contactDao = new ContactDaoImpl();
     SettingDao settingDao = new SettingDaoImpl();
+    Messager messager = Messager.getInstance();
 
     public String getJsonContactList(int userId) {
         List<ContactBean> contactList = getContactList(userId);
@@ -47,4 +51,16 @@ public class ContactService {
         return contactBeans;
     }
 
+    public void addContact(int senderId, int receiverId) throws ContactAlreadyExist {
+        Contact contact = new Contact();
+        contact.setSenderId(senderId);
+        contact.setReceiverId(receiverId);
+
+        try {
+            contactDao.create(contact);
+            messager.addContact(senderId, receiverId);
+        } catch (SQLException e) {
+            throw  new ContactAlreadyExist();
+        }
+    }
 }
