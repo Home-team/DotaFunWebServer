@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(filterName = "LoginedFilter", urlPatterns = {"/contactList", "/addContact"})
+@WebFilter(filterName = "LoginedFilter", urlPatterns = {"/contactList", "/addContact", "/sendMessage", "/getMessage"})
 public class LoginedFilter implements Filter {
     public void destroy() {
     }

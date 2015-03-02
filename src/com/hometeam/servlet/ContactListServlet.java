@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/contactList")
-public class FriendListServlet extends HttpServlet {
-    private static final Logger LOG = Logger.getLogger(FriendListServlet.class);
+public class ContactListServlet extends HttpServlet {
+    private static final Logger LOG = Logger.getLogger(ContactListServlet.class);
     private ContactService contactService;
 
     @Override

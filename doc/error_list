@@ -6,3 +6,4 @@ BAD_MIN_PASSWORD_LENGTH - по аналогии
 USER_ALREADY_EXIST - пользователь уже существует
 NEED_LOGIN_PERMISSION - пользователь должен быть залогиненым чтоб совершить это действие
 CONTACT_ALREADY_EXIST - контакт уже был добавлен
+NO_CONTACT_LIST - попытка отправить сообение не находясь в листе контактов
