@@ -40,6 +40,10 @@ public class Messager {
         }
     }
 
+    public void addUser(int userId) {
+        messagent.put(userId,new MessageBean());
+    }
+
     public void addContact(int sender, int receiver) {
         MessageBean messageBean = messagent.get(receiver);
         messageBean.getSenders().add(sender);

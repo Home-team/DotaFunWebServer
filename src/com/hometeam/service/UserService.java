@@ -2,6 +2,7 @@ package com.hometeam.service;
 
 import com.hometeam.bean.UserBean;
 import com.hometeam.constant.R;
+import com.hometeam.core.Messager;
 import com.hometeam.dao.SettingDao;
 import com.hometeam.dao.UserDao;
 import com.hometeam.dao.mySqlImpl.SettingDaoImpl;
@@ -15,6 +16,7 @@ public class UserService {
     private static final Logger LOG = Logger.getLogger(UserService.class);
     private UserDao userDao = new UserDaoImpl();
     private SettingDao settingDao = new SettingDaoImpl();
+    private Messager messager = Messager.getInstance();
 
     public void registration(String login, String password) throws UserAlreadyExist {
         User byLogin = userDao.findByLogin(login);
@@ -36,6 +38,8 @@ public class UserService {
         settingDao.create(name);
         settingDao.create(crystal);
         settingDao.create(slot);
+
+        messager.addUser(target.getId());
     }
 
     public User authentication(String login, String password) {
