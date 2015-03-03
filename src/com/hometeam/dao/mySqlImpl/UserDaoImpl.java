@@ -34,23 +34,31 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findById(int id) throws SQLException {
+    public User findById(int id) {
         connection = PooledDataSource.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         User user = null;
 
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM `user` WHERE `user`.id = ?");
-            preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                user = getUserByResultSet(resultSet);
+            try {
+                preparedStatement = connection.prepareStatement("SELECT * FROM `user` WHERE `user`.id = ?");
+                preparedStatement.setInt(1, id);
+                resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    user = getUserByResultSet(resultSet);
+                }
+            } finally {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                connection.close();
             }
-        } finally {
-            resultSet.close();
-            preparedStatement.close();
-            connection.close();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
         }
 
         return user;

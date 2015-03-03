@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserDao {
 
-    User findById(int id) throws SQLException;
+    User findById(int id);
 
     User findByLogin(String login);
 

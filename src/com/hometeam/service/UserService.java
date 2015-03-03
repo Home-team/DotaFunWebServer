@@ -1,5 +1,6 @@
 package com.hometeam.service;
 
+import com.hometeam.bean.UserBean;
 import com.hometeam.constant.R;
 import com.hometeam.dao.SettingDao;
 import com.hometeam.dao.UserDao;
@@ -49,5 +50,17 @@ public class UserService {
         } else {
             return byLogin;
         }
+    }
+
+    public UserBean getUserBean(int userId) {
+        User byId = userDao.findById(userId);
+        Setting setting = settingDao.find(byId.getId(), R.SETTING.NAME);
+
+        UserBean userBean = new UserBean();
+        userBean.setId(byId.getId());
+        userBean.setLogin(byId.getLogin());
+        userBean.setName(setting.getValue());
+
+        return userBean;
     }
 }
